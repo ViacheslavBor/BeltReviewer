@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+</head>
+<style>
+	.myBox {
+			border: none;
+			padding: 5px;
+			font: 24px/36px sans-serif;
+			width: 250px;
+			height: 200px;
+			overflow: scroll;
+			}
+</style>
+<body>
+	<h1>Welcome, {{user.name}} </h1>
+		<p>*{{request.session.message}}</p><br>
+		<h3>Recent Book Reviews:</h3><br>
+		{% if reviews %}
+			{% for review in reviews %}
+				<h2><a href="/books/{{review.books.id}}">{{review.books.title}}</a></h2>
+				<p>Rating:{{review.rating}}</p>
+				<p>{{review.created_by.name}} Says: {{review.text}}</p>
+				<p>Posted on {{review.created_at}}</p>
+			{% endfor %}
+		{% endif %}
+		Other Books with Reviews:
+			<div class="myBox">
+			{% for book in all_books %}
+				<p><a href="/books/{{book.id}}">{{book.title}}</a></p>
+			{% endfor %}
+			</div>
+		<form action="/logout" method="GET">
+			{% csrf_token %}
+        	<input type="submit" value="Log out">
+    	</form>
+    	<a href="/books/add">Add Book and Review</a>
+</body>
+</html>

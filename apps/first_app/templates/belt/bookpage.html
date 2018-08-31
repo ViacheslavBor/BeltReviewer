@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+</head>
+<body>
+	<h1>{{current_book.title}}</h1><br>
+	Author: {{current_book.authors.name}}<br><br>
+	<h1>Reviews:</h1>
+	{% for review in all_reviews %}
+		<p>Rating: {{review.rating}} stars</p>
+		<p><a href="">{{review.created_by.name}}</a> says {{review.text}}</p>
+		<p>Posted on {{review.created_at}}</p>
+	
+	{% if request.session.user_id == review.created_by.id %}
+		<a href='/delete_review/{{review.id}}'>Delete the Review</a>
+	{% endif %}
+	{% endfor %}
+	Add a review:
+	<form action="/side_review/{{current_book.id}}" method="POST">
+		{% csrf_token %}
+		<textarea name="comment"></textarea>
+		<select name="rating">
+			<option value=1>1</option>
+			<option value=2>2</option>
+			<option value=3>3</option>
+			<option value=4>4</option>
+			<option value=5>5</option>
+		</select><br><br>
+		<input type="submit" value="Add Review">
+	</form>
+	<a href="/books">Home</a>
+	<form action="/logout" method="GET">
+			{% csrf_token %}
+        <input type="submit" value="Log out">
+    </form>
+</body>
+</html>

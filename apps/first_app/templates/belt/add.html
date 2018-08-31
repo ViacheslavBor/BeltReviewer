@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<<meta charset="utf-8">
+</head>
+<body>
+	<h1>Add a New Book Title and a Review:</h1>
+	<form action="/upload" method="POST">
+		{% csrf_token %}
+		Book Title:<input type="text" name="title"><br>
+		Author:
+		<p>Choose from a list:</p>
+			<select name="author">
+				{% for author in all_authors %}
+					<option value="{{author.id}}">{{author.name}}</option>
+				{% endfor %}
+			</select>
+		<p>Or add a new author:</p>
+		<input type="text" name="new_author"><br>
+		Review:<br>
+		<textarea name="text"></textarea><br>
+		Rating:
+		<select name="rating"> stars.
+			<option value=1>1</option>
+			<option value=2>2</option>
+			<option value=3>3</option>
+			<option value=4>4</option>
+			<option value=5>5</option>
+		</select> stars.<br><br>
+		<input type="Submit" value="Add Book and Review">
+	</form>
+</body>
+</html>
